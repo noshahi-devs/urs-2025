@@ -1,0 +1,275 @@
+           <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Persistent Countdown Clock</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Use Inter font -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0fdfa; /* pale teal background */
+        }
+        .countdown-segment {
+            transition: transform 0.1s ease-in-out;
+        }
+        .countdown-segment:hover {
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center p-4">
+
+    <!-- Responsive Navbar -->
+    <nav class="w-full bg-teal-900/80 backdrop-blur sticky top-0 z-50">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex-shrink-0">
+                    <a href="#" class="text-white font-extrabold text-lg">Urs Mubarak 2025</a>
+                </div>
+
+                <!-- Desktop menu -->
+                <div class="hidden md:flex md:items-center md:space-x-6" id="nav-menu-desktop">
+                    <a href="index.html" class="text-teal-100 hover:text-white">Home</a>
+                    <a href="ursPrograms.html" class="text-teal-100 hover:text-white">Urs Programs</a>
+                    <a href="#" class="text-teal-100 hover:text-white">Cheif Guests</a>
+                    <a href="#" class="text-teal-100 hover:text-white">About Urs</a>
+                </div>
+
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button id="nav-toggle" aria-controls="mobile-menu" aria-expanded="false" class="text-gray-300 hover:text-white focus:outline-none">
+                        <svg id="nav-open-icon" class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                        <svg id="nav-close-icon" class="h-6 w-6 hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile menu -->
+        <div class="md:hidden hidden px-4 pb-4" id="mobile-menu">
+            <a href="#" class="block py-2 text-teal-100 hover:text-white">Urs Programs</a>
+            <a href="#" class="block py-2 text-teal-100 hover:text-white">Cheif Guests</a>
+            <a href="#" class="block py-2 text-teal-100 hover:text-white">About Urs</a>
+        </div>
+    </nav>
+    
+    <!-- Programs -->
+    <main class="w-full max-w-4xl mt-8">
+        <h2 class="text-2xl font-extrabold text-teal-900 mb-4 text-center">Urs Programs</h2>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <!-- Card 1: Mehfil e Raag -->
+            <article class="bg-white rounded-lg shadow p-4 border border-teal-100">
+                <div class="h-40 bg-teal-50 rounded overflow-hidden mb-4 flex items-center justify-center">
+                    <!-- placeholder image -->
+                    <svg class="w-full h-full" viewBox="0 0 600 240" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="600" height="240" fill="#e6fffa"></rect>
+                        <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#0f766e" font-size="20">Mehfil e Raag</text>
+                    </svg>
+                </div>
+                <h3 class="text-lg font-bold text-teal-900">Mehfil e Raag</h3>
+                <p class="text-sm text-teal-700">By Manna Raagi, Sharif Raagi</p>
+                <p class="text-sm text-teal-600 mt-2">Time: 1:30 PM (after Zuhr)</p>
+                <div class="mt-4 flex justify-end">
+                    <a href="#" class="inline-block bg-teal-700 text-white text-sm font-semibold py-2 px-4 rounded hover:bg-teal-800">Read More</a>
+                </div>
+            </article>
+
+            <!-- Card 2: Mehfil e Naat -->
+            <article class="bg-white rounded-lg shadow p-4 border border-teal-100">
+                <div class="h-40 bg-teal-50 rounded overflow-hidden mb-4 flex items-center justify-center">
+                    <svg class="w-full h-full" viewBox="0 0 600 240" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="600" height="240" fill="#e6fffa"></rect>
+                        <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#0f766e" font-size="18">Mehfil e Naat</text>
+                    </svg>
+                </div>
+                <h3 class="text-lg font-bold text-teal-900">Mehfil e Naat</h3>
+                <p class="text-sm text-teal-700">Naa khawan: Nassem Hassan Chand, Asad Iftikhar<br>Naqabat: Zia Churahi</p>
+                <p class="text-sm text-teal-600 mt-2">Time: 4:15 PM (after Asr)</p>
+                <div class="mt-4 flex justify-end">
+                    <a href="#" class="inline-block bg-teal-700 text-white text-sm font-semibold py-2 px-4 rounded hover:bg-teal-800">Read More</a>
+                </div>
+            </article>
+
+            <!-- Card 3: Taqseem e Langer -->
+            <article class="bg-white rounded-lg shadow p-4 border border-teal-100">
+                <div class="h-40 bg-teal-50 rounded overflow-hidden mb-4 flex items-center justify-center">
+                    <svg class="w-full h-full" viewBox="0 0 600 240" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="600" height="240" fill="#e6fffa"></rect>
+                        <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#0f766e" font-size="18">Taqseem e Langer</text>
+                    </svg>
+                </div>
+                <h3 class="text-lg font-bold text-teal-900">Taqseem e Langer</h3>
+                <p class="text-sm text-teal-700">By Syed Wajid Ali Shah<br>Dua by: Peer Zubair Chishti</p>
+                <p class="text-sm text-teal-600 mt-2">Time: 6:00 PM (after Maghrib)</p>
+                <div class="mt-4 flex justify-end">
+                    <a href="#" class="inline-block bg-teal-700 text-white text-sm font-semibold py-2 px-4 rounded hover:bg-teal-800">Read More</a>
+                </div>
+            </article>
+
+            <!-- Card 4: Chadar Poshi -->
+            <article class="bg-white rounded-lg shadow p-4 border border-teal-100">
+                <div class="h-40 bg-teal-50 rounded overflow-hidden mb-4 flex items-center justify-center">
+                    <svg class="w-full h-full" viewBox="0 0 600 240" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="600" height="240" fill="#e6fffa"></rect>
+                        <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#0f766e" font-size="18">Chadar Poshi</text>
+                    </svg>
+                </div>
+                <h3 class="text-lg font-bold text-teal-900">Chadar Poshi</h3>
+                <p class="text-sm text-teal-700">Chadar will be placed on the shrine. Special Dua: Sajjada Nasheen Adeel Noshahi</p>
+                <p class="text-sm text-teal-600 mt-2">Time: 8:00 PM</p>
+                <div class="mt-4 flex justify-end">
+                    <a href="#" class="inline-block bg-teal-700 text-white text-sm font-semibold py-2 px-4 rounded hover:bg-teal-800">Read More</a>
+                </div>
+            </article>
+
+            <!-- Card 5: Chandi Musical Group -->
+            <article class="bg-white rounded-lg shadow p-4 border border-teal-100">
+                <div class="h-40 bg-teal-50 rounded overflow-hidden mb-4 flex items-center justify-center">
+                    <svg class="w-full h-full" viewBox="0 0 600 240" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="600" height="240" fill="#e6fffa"></rect>
+                        <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#0f766e" font-size="18">Chandi Musical Group</text>
+                    </svg>
+                </div>
+                <h3 class="text-lg font-bold text-teal-900">Chandi Musical Group</h3>
+                <p class="text-sm text-teal-700">By Mana, Bota</p>
+                <p class="text-sm text-teal-600 mt-2">Time: 8:15 PM (after Isha)</p>
+                <div class="mt-4 flex justify-end">
+                    <a href="#" class="inline-block bg-teal-700 text-white text-sm font-semibold py-2 px-4 rounded hover:bg-teal-800">Read More</a>
+                </div>
+            </article>
+
+            <!-- Card 6: Mehfil e Sama -->
+            <article class="bg-white rounded-lg shadow p-4 border border-teal-100">
+                <div class="h-40 bg-teal-50 rounded overflow-hidden mb-4 flex items-center justify-center">
+                    <svg class="w-full h-full" viewBox="0 0 600 240" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="600" height="240" fill="#e6fffa"></rect>
+                        <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#0f766e" font-size="18">Mehfil e Sama</text>
+                    </svg>
+                </div>
+                <h3 class="text-lg font-bold text-teal-900">Mehfil e Sama</h3>
+                <p class="text-sm text-teal-700">By Azhar Abbas (Faisalabad)</p>
+                <p class="text-sm text-teal-600 mt-2">Time: 9:00 PM</p>
+                <div class="mt-4 flex justify-end">
+                    <a href="#" class="inline-block bg-teal-700 text-white text-sm font-semibold py-2 px-4 rounded hover:bg-teal-800">Read More</a>
+                </div>
+            </article>
+        </div>
+
+        <!-- Special Dua & Ikhtatami Langer as full-width items -->
+        <div class="mt-8 grid grid-cols-1 gap-6">
+            <section class="bg-white rounded-lg shadow p-4 border border-teal-100">
+                <h3 class="text-lg font-bold text-teal-900">Special Dua</h3>
+                <p class="text-sm text-teal-700 mt-2">By Allama Nabeel Noshahi</p>
+                <p class="text-sm text-teal-600 mt-1">Time: 11:50 PM</p>
+                <div class="mt-4 flex justify-end">
+                    <a href="#" class="inline-block bg-teal-700 text-white text-sm font-semibold py-2 px-4 rounded hover:bg-teal-800">Read More</a>
+                </div>
+            </section>
+
+            <section class="bg-white rounded-lg shadow p-4 border border-teal-100">
+                <h3 class="text-lg font-bold text-teal-900">Ikhtatami Langer</h3>
+                <p class="text-sm text-teal-700 mt-2">Time: 12:00 AM</p>
+                <div class="mt-4 flex justify-end">
+                    <a href="#" class="inline-block bg-teal-700 text-white text-sm font-semibold py-2 px-4 rounded hover:bg-teal-800">Read More</a>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="w-full bg-teal-900/10 mt-8 px-4 py-8">
+        <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
+            <!-- Quick links -->
+            <div>
+                <h3 class="text-teal-800 font-bold mb-2">Langer</h3>
+                <ul class="text-teal-700 text-sm space-y-1">
+                    <li><a href="#" class="hover:underline">Location</a></li>
+                    <li><a href="#" class="hover:underline">Qawal</a></li>
+                    <li><a href="#" class="hover:underline">Raagi</a></li>
+                    <li><a href="#" class="hover:underline">Mehfil e Naat</a></li>
+                    <li><a href="#" class="hover:underline">Packing Langer</a></li>
+                    <li><a href="#" class="hover:underline">About</a></li>
+                </ul>
+            </div>
+
+            <!-- Map -->
+            <div class="">
+                <h3 class="text-teal-800 font-bold mb-2">Location Map</h3>
+                <div class="w-full h-40 bg-white rounded overflow-hidden border border-teal-200">
+                    <!-- Example embed using Google Maps. Replace src with your map link if needed -->
+                   <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3412.8862020242973!2d72.73767509999999!3d31.196168500000002!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x392255f80b070be5%3A0x5541134cefad4a11!2sHazrat%20Baba%20Talib%20Noshahi%20Sb%20Shrine!5e0!3m2!1sen!2s!4v1759867281821!5m2!1sen!2s" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+
+            <!-- Contacts / Social -->
+            <div>
+                <h3 class="text-teal-800 font-bold mb-2">Connect</h3>
+                <div class="flex gap-4 mb-3 items-center">
+                    <!-- Facebook -->
+                    <a href="https://www.facebook.com/profile.php?id=61567039846702
+https://www.tiktok.com/@noshahi_media_97" target="_blank" rel="noopener" aria-label="Facebook" title="Facebook" class="text-teal-700 hover:text-teal-900">
+                        <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <path d="M22 12.07C22 6.48 17.52 2 11.93 2S2 6.48 2 12.07C2 17.06 5.66 21.13 10.44 21.98v-6.99H7.9v-2.92h2.54V9.84c0-2.5 1.49-3.88 3.77-3.88 1.09 0 2.23.2 2.23.2v2.45h-1.25c-1.23 0-1.61.77-1.61 1.56v1.87h2.74l-.44 2.92h-2.3v6.99C18.34 21.13 22 17.06 22 12.07z" />
+                        </svg>
+                        <span class="sr-only">Facebook</span>
+                    </a>
+
+                    <!-- TikTok (music note icon) -->
+                    <a href="https://www.tiktok.com/@noshahi_media_97" target="_blank" rel="noopener" aria-label="TikTok" title="TikTok" class="text-teal-700 hover:text-teal-900">
+                        <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <path d="M12 3v10.55A4 4 0 1 0 14 17V7h4V3h-6z" />
+                        </svg>
+                        <span class="sr-only">TikTok</span>
+                    </a>
+
+                    <!-- YouTube -->
+                    <a href="https://youtube.com/@noshahi_media_97" target="_blank" rel="noopener" aria-label="YouTube" title="YouTube" class="text-teal-700 hover:text-teal-900">
+                        <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <path d="M23.5 6.2a3 3 0 0 0-2.1-2.12C19.6 3.5 12 3.5 12 3.5s-7.6 0-9.4.58A3 3 0 0 0 .5 6.2 31.7 31.7 0 0 0 0 12a31.7 31.7 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.12c1.8.58 9.4.58 9.4.58s7.6 0 9.4-.58A3 3 0 0 0 23.5 17.8 31.7 31.7 0 0 0 24 12a31.7 31.7 0 0 0-.5-5.8zM9.8 15.5V8.5l6.6 3.5-6.6 3.5z" />
+                        </svg>
+                        <span class="sr-only">YouTube</span>
+                    </a>
+
+                    <!-- Instagram -->
+                    <a href="https://www.instagram.com/" target="_blank" rel="noopener" aria-label="Instagram" title="Instagram" class="text-teal-700 hover:text-teal-900">
+                        <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5" class="stroke-current"></rect>
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8" class="stroke-current"></path>
+                            <line x1="17.5" y1="6.5" x2="17.5" y2="6.5" class="stroke-current" />
+                        </svg>
+                        <span class="sr-only">Instagram</span>
+                    </a>
+                </div>
+
+                <div class="space-y-2 text-sm text-teal-700">
+                    <!-- WhatsApp and call links use the provided number -->
+                    <div>
+                        <a href="tel:+00923281642297" class="block hover:underline">Call: +00923281642297</a>
+                    </div>
+                    <div>
+                        <a href="https://wa.me/00923281642297" target="_blank" rel="noopener" class="block hover:underline">WhatsApp</a>
+                    </div>
+                    <div>
+                        <a href="mailto:info@example.com" class="block hover:underline">Email: info@example.com</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="max-w-4xl mx-auto mt-6 text-center text-xs text-teal-500">
+            © Urs Mubarak 2025
+        </div>
+    </footer>
+
+
+</body>
+</html>

@@ -1,0 +1,532 @@
+           <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Persistent Countdown Clock</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Use Inter font -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0fdfa; /* pale teal background */
+        }
+        .countdown-segment {
+            transition: transform 0.1s ease-in-out;
+        }
+        .countdown-segment:hover {
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center p-4">
+
+    <!-- Responsive Navbar -->
+    <nav class="w-full bg-teal-900/80 backdrop-blur sticky top-0 z-50">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex-shrink-0">
+                    <a href="#" class="text-white font-extrabold text-lg">Urs Mubarak 2025</a>
+                </div>
+
+                <!-- Desktop menu -->
+                <div class="hidden md:flex md:items-center md:space-x-6" id="nav-menu-desktop">
+                    <a href="index.html" class="text-teal-100 hover:text-white">Home</a>
+                    <a href="ursPrograms.html" class="text-teal-100 hover:text-white">Urs Programs</a>
+                    <a href="#" class="text-teal-100 hover:text-white">Cheif Guests</a>
+                    <a href="#" class="text-teal-100 hover:text-white">About Urs</a>
+                </div>
+
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button id="nav-toggle" aria-controls="mobile-menu" aria-expanded="false" class="text-gray-300 hover:text-white focus:outline-none">
+                        <svg id="nav-open-icon" class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                        <svg id="nav-close-icon" class="h-6 w-6 hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile menu -->
+        <div class="md:hidden hidden px-4 pb-4" id="mobile-menu">
+            <a href="#" class="block py-2 text-teal-100 hover:text-white">Urs Programs</a>
+            <a href="#" class="block py-2 text-teal-100 hover:text-white">Cheif Guests</a>
+            <a href="#" class="block py-2 text-teal-100 hover:text-white">About Urs</a>
+        </div>
+    </nav>
+
+    <div class="w-full max-w-4xl bg-white p-6 sm:p-10 rounded-xl shadow-2xl border border-teal-200">
+        <h1 class="text-3xl sm:text-4xl font-extrabold text-teal-900 mb-2 text-center">
+            🚀 Urs Mubarak 2025 — Grand Countdown
+        </h1>
+
+        <div id="countdown-title" class="text-center text-teal-700 mb-6">
+            <div class="text-lg font-semibold">Hazrat Baba Talib Sain Sarkar</div>
+            <div class="mt-2 flex items-center justify-center gap-2 text-sm">
+                <!-- Calendar icon -->
+                <svg class="w-5 h-5 text-teal-800" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <rect x="3" y="4" width="18" height="18" rx="2"></rect>
+                    <path d="M16 2v4M8 2v4M3 10h18"></path>
+                </svg>
+                <div>Dated: <span class="font-medium">16 Oct 2025</span></div>
+            </div>
+            <div class="mt-1 flex items-center justify-center gap-2 text-sm">
+                <!-- Location / pin icon -->
+                <svg class="w-5 h-5 text-teal-800" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M21 10c0 7-9 12-9 12S3 17 3 10a9 9 0 1 1 18 0z"></path>
+                    <circle cx="12" cy="10" r="3"></circle>
+                </svg>
+                <div>Location: <span class="font-medium">Village 97 JB, Gojra</span></div>
+            </div>
+        </div>
+
+        <!-- Countdown Display -->
+        <div id="countdown-display" class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-10">
+            <!-- Days Segment -->
+            <div class="countdown-segment flex flex-col items-center p-4 bg-teal-50 rounded-lg shadow-inner">
+                <span id="days" class="text-5xl sm:text-6xl font-black text-teal-800">00</span>
+                <span class="text-sm font-semibold text-teal-600 mt-1">DAYS</span>
+            </div>
+            <!-- Hours Segment -->
+            <div class="countdown-segment flex flex-col items-center p-4 bg-teal-50 rounded-lg shadow-inner">
+                <span id="hours" class="text-5xl sm:text-6xl font-black text-teal-800">00</span>
+                <span class="text-sm font-semibold text-teal-600 mt-1">HOURS</span>
+            </div>
+            <!-- Minutes Segment -->
+            <div class="countdown-segment flex flex-col items-center p-4 bg-teal-50 rounded-lg shadow-inner">
+                <span id="minutes" class="text-5xl sm:text-6xl font-black text-teal-800">00</span>
+                <span class="text-sm font-semibold text-teal-600 mt-1">MINUTES</span>
+            </div>
+            <!-- Seconds Segment -->
+            <div class="countdown-segment flex flex-col items-center p-4 bg-teal-50 rounded-lg shadow-inner">
+                <span id="seconds" class="text-5xl sm:text-6xl font-black text-teal-800">00</span>
+                <span class="text-sm font-semibold text-teal-600 mt-1">SECONDS</span>
+            </div>
+        </div>
+
+        <!-- Input controls removed intentionally (countdown is fixed to hardcoded date) -->
+
+        <!-- Status/Error Message -->
+    <div id="status-message" class="mt-4 text-center text-teal-700 h-6"></div>
+        
+        <!-- User ID Display (Required for multi-user apps) -->
+        <p class="text-xs text-teal-500 mt-8 text-center">
+            User ID: <span id="user-id-display">Initializing...</span>
+        </p>
+    </div>
+    <!-- Footer -->
+    <footer class="w-full bg-teal-900/10 mt-8 px-4 py-8">
+        <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
+            <!-- Quick links -->
+            <div>
+                <h3 class="text-teal-800 font-bold mb-2">Langer</h3>
+                <ul class="text-teal-700 text-sm space-y-1">
+                    <li><a href="#" class="hover:underline">Location</a></li>
+                    <li><a href="#" class="hover:underline">Qawal</a></li>
+                    <li><a href="#" class="hover:underline">Raagi</a></li>
+                    <li><a href="#" class="hover:underline">Mehfil e Naat</a></li>
+                    <li><a href="#" class="hover:underline">Packing Langer</a></li>
+                    <li><a href="#" class="hover:underline">About</a></li>
+                </ul>
+            </div>
+
+            <!-- Map -->
+            <div class="">
+                <h3 class="text-teal-800 font-bold mb-2">Location Map</h3>
+                <div class="w-full h-40 bg-white rounded overflow-hidden border border-teal-200">
+                    <!-- Example embed using Google Maps. Replace src with your map link if needed -->
+                   <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3412.8862020242973!2d72.73767509999999!3d31.196168500000002!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x392255f80b070be5%3A0x5541134cefad4a11!2sHazrat%20Baba%20Talib%20Noshahi%20Sb%20Shrine!5e0!3m2!1sen!2s!4v1759867281821!5m2!1sen!2s" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+
+            <!-- Contacts / Social -->
+            <div>
+                <h3 class="text-teal-800 font-bold mb-2">Connect</h3>
+                <div class="flex gap-4 mb-3 items-center">
+                    <!-- Facebook -->
+                    <a href="https://www.facebook.com/profile.php?id=61567039846702
+https://www.tiktok.com/@noshahi_media_97" target="_blank" rel="noopener" aria-label="Facebook" title="Facebook" class="text-teal-700 hover:text-teal-900">
+                        <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <path d="M22 12.07C22 6.48 17.52 2 11.93 2S2 6.48 2 12.07C2 17.06 5.66 21.13 10.44 21.98v-6.99H7.9v-2.92h2.54V9.84c0-2.5 1.49-3.88 3.77-3.88 1.09 0 2.23.2 2.23.2v2.45h-1.25c-1.23 0-1.61.77-1.61 1.56v1.87h2.74l-.44 2.92h-2.3v6.99C18.34 21.13 22 17.06 22 12.07z" />
+                        </svg>
+                        <span class="sr-only">Facebook</span>
+                    </a>
+
+                    <!-- TikTok (music note icon) -->
+                    <a href="https://www.tiktok.com/@noshahi_media_97" target="_blank" rel="noopener" aria-label="TikTok" title="TikTok" class="text-teal-700 hover:text-teal-900">
+                        <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <path d="M12 3v10.55A4 4 0 1 0 14 17V7h4V3h-6z" />
+                        </svg>
+                        <span class="sr-only">TikTok</span>
+                    </a>
+
+                    <!-- YouTube -->
+                    <a href="https://youtube.com/@noshahi_media_97" target="_blank" rel="noopener" aria-label="YouTube" title="YouTube" class="text-teal-700 hover:text-teal-900">
+                        <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <path d="M23.5 6.2a3 3 0 0 0-2.1-2.12C19.6 3.5 12 3.5 12 3.5s-7.6 0-9.4.58A3 3 0 0 0 .5 6.2 31.7 31.7 0 0 0 0 12a31.7 31.7 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.12c1.8.58 9.4.58 9.4.58s7.6 0 9.4-.58A3 3 0 0 0 23.5 17.8 31.7 31.7 0 0 0 24 12a31.7 31.7 0 0 0-.5-5.8zM9.8 15.5V8.5l6.6 3.5-6.6 3.5z" />
+                        </svg>
+                        <span class="sr-only">YouTube</span>
+                    </a>
+
+                    <!-- Instagram -->
+                    <a href="https://www.instagram.com/" target="_blank" rel="noopener" aria-label="Instagram" title="Instagram" class="text-teal-700 hover:text-teal-900">
+                        <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5" class="stroke-current"></rect>
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8" class="stroke-current"></path>
+                            <line x1="17.5" y1="6.5" x2="17.5" y2="6.5" class="stroke-current" />
+                        </svg>
+                        <span class="sr-only">Instagram</span>
+                    </a>
+                </div>
+
+                <div class="space-y-2 text-sm text-teal-700">
+                    <!-- WhatsApp and call links use the provided number -->
+                    <div>
+                        <a href="tel:+00923281642297" class="block hover:underline">Call: +00923281642297</a>
+                    </div>
+                    <div>
+                        <a href="https://wa.me/00923281642297" target="_blank" rel="noopener" class="block hover:underline">WhatsApp</a>
+                    </div>
+                    <div>
+                        <a href="mailto:info@example.com" class="block hover:underline">Email: info@example.com</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="max-w-4xl mx-auto mt-6 text-center text-xs text-teal-500">
+            © Urs Mubarak 2025
+        </div>
+    </footer>
+
+    <!-- Firebase Imports -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+    /* Removed auth imports to disable Firebase authentication */
+    import { getFirestore, doc, setDoc, getDoc, setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // IMPORTANT: Firebase Global Variables
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
+    // Authentication removed: initial auth tokens are ignored
+        
+        // Initialize Firebase
+    let app;
+    let db;
+    let firebaseAvailable = true;
+    // Use a local UUID for user identification (no Firebase auth)
+    let userId = (typeof crypto !== 'undefined' && crypto.randomUUID) ? crypto.randomUUID() : 'local-' + Date.now();
+
+        setLogLevel('Debug');
+
+        try {
+            // Only attempt to initialize Firebase when a non-empty config is provided
+                if (firebaseConfig && Object.keys(firebaseConfig).length > 0) {
+                app = initializeApp(firebaseConfig);
+                db = getFirestore(app);
+            } else {
+                throw new Error('Empty or missing firebaseConfig');
+            }
+        } catch (error) {
+            console.warn("Firebase initialization skipped or failed:", error);
+            firebaseAvailable = false;
+            // Show a soft-status but don't block the app — we'll fall back to the hardcoded target
+            // document.getElementById('status-message').textContent = "Running without Firebase (using local fallback).";
+        }
+
+        const TIMER_DOC_PATH = `/artifacts/${appId}/users/`;
+        const TIMER_DOC_ID = 'settings';
+
+    // Hardcoded fallback target: 16 Oct 2025 12:00 (local time)
+    const HARDCODED_TARGET = new Date('2025-10-16T12:00:00').getTime();
+
+        let countdownInterval = null;
+        let targetTimestamp = null;
+
+        // --- Utility Functions ---
+
+        /**
+         * Converts milliseconds into days, hours, minutes, and seconds.
+         * @param {number} ms - Time difference in milliseconds.
+         * @returns {{days: string, hours: string, minutes: string, seconds: string}} Formatted time components.
+         */
+        const formatTime = (ms) => {
+            const totalSeconds = Math.floor(ms / 1000);
+            const days = Math.floor(totalSeconds / (3600 * 24));
+            const hours = Math.floor((totalSeconds % (3600 * 24)) / 3600);
+            const minutes = Math.floor((totalSeconds % 3600) / 60);
+            const seconds = Math.floor(totalSeconds % 60);
+
+            // Pad numbers with leading zero
+            const pad = (num) => String(num).padStart(2, '0');
+
+            return {
+                days: pad(days),
+                hours: pad(hours),
+                minutes: pad(minutes),
+                seconds: pad(seconds)
+            };
+        };
+
+        /**
+         * Displays the calculated time on the UI.
+         */
+        const updateDisplay = (timeComponents) => {
+            document.getElementById('days').textContent = timeComponents.days;
+            document.getElementById('hours').textContent = timeComponents.hours;
+            document.getElementById('minutes').textContent = timeComponents.minutes;
+            document.getElementById('seconds').textContent = timeComponents.seconds;
+        };
+        
+        /**
+         * Displays a temporary message to the user.
+         */
+        const showStatus = (message, isError = false) => {
+            const statusEl = document.getElementById('status-message');
+            statusEl.textContent = message;
+            statusEl.className = `mt-4 text-center h-6 ${isError ? 'text-red-400' : 'text-green-400'}`;
+            setTimeout(() => {
+                statusEl.textContent = '';
+                statusEl.className = 'mt-4 text-center h-6 text-red-400';
+            }, 3000);
+        };
+
+        // --- Core Countdown Logic ---
+
+        /**
+         * The main function called every second to update the clock.
+         */
+        const tick = () => {
+            if (!targetTimestamp) return;
+
+            const now = new Date().getTime();
+            const distance = targetTimestamp - now;
+
+            if (distance < 0) {
+                // Countdown finished
+                clearInterval(countdownInterval);
+                countdownInterval = null;
+                updateDisplay(formatTime(0));
+                document.getElementById('countdown-title').textContent = "🎉 Time's Up! Countdown Complete!";
+                return;
+            }
+
+            const time = formatTime(distance);
+            updateDisplay(time);
+
+            // // Update title to show target date when counting down
+            // if (countdownInterval) {
+            //     const targetDate = new Date(targetTimestamp);
+            //     document.getElementById('countdown-title').textContent = `Counting down to: ${targetDate.toLocaleString()}`;
+            // }
+        };
+
+        /**
+         * Starts the countdown timer.
+         */
+        const startCountdown = () => {
+            if (countdownInterval) {
+                clearInterval(countdownInterval);
+            }
+            // Call tick immediately to avoid 1-second delay on load/start
+            tick();
+            countdownInterval = setInterval(tick, 1000);
+        };
+
+
+        // --- Firebase Data Handling ---
+
+        /**
+         * Saves the current target timestamp to Firestore.
+         */
+        const loadTarget = async () => {
+            try {
+                // If Firestore is available and we have a userId, try to load a saved target
+                if (firebaseAvailable && db && userId && userId !== 'unknown') {
+                    try {
+                        const docRef = doc(db, TIMER_DOC_PATH + userId + "/countdown_timer", TIMER_DOC_ID);
+                        const docSnap = await getDoc(docRef);
+
+                        if (docSnap.exists()) {
+                            const data = docSnap.data();
+                            targetTimestamp = data.targetTimestamp;
+
+                            // Use saved target only when it's in the future
+                            if (targetTimestamp && targetTimestamp > new Date().getTime()) {
+                                const targetDateObj = new Date(targetTimestamp);
+                                const dateString = targetDateObj.toISOString().split('T')[0];
+                                const timeString = targetDateObj.toTimeString().substring(0, 5);
+
+                                const dateEl = document.getElementById('target-date');
+                                const timeEl = document.getElementById('target-time');
+                                if (dateEl) dateEl.value = dateString;
+                                if (timeEl) timeEl.value = timeString;
+
+                                startCountdown();
+                                showStatus("Loaded previous countdown!", false);
+                                return; // Loaded and started, exit early
+                            }
+                        }
+                    } catch (e) {
+                        console.warn('Could not read saved countdown from Firestore:', e);
+                    }
+                }
+
+                // If no valid saved target was found or Firestore isn't available, use the hardcoded default (if it's in the future)
+                if (HARDCODED_TARGET > new Date().getTime()) {
+                    targetTimestamp = HARDCODED_TARGET;
+                    const targetDateObj = new Date(targetTimestamp);
+                    const dateString = targetDateObj.toISOString().split('T')[0];
+                    const timeString = targetDateObj.toTimeString().substring(0, 5);
+
+                    const dateEl = document.getElementById('target-date');
+                    const timeEl = document.getElementById('target-time');
+                    if (dateEl) dateEl.value = dateString;
+                    if (timeEl) timeEl.value = timeString;
+
+                    startCountdown();
+                    // showStatus("Using default countdown (hardcoded).", false);
+                } else {
+                    // If even the hardcoded date is in the past, show prompt
+                    console.log("No previous countdown target found and hardcoded target is past.");
+                    document.getElementById('countdown-title').textContent = "Set a target date to begin!";
+                }
+            } catch (e) {
+                console.error("Error loading target:", e);
+                showStatus("Error loading previous countdown.", true);
+            }
+        };
+
+        // --- Event Handlers ---
+
+        /**
+         * Handles the click on the "Set Countdown" button.
+         */
+        const handleSetCountdown = () => {
+            const dateEl = document.getElementById('target-date');
+            const timeEl = document.getElementById('target-time');
+
+            // If inputs are not present (page was simplified), bail out gracefully
+            if (!dateEl || !timeEl) {
+                showStatus("No input controls available.", true);
+                return;
+            }
+
+            const dateInput = dateEl.value;
+            const timeInput = timeEl.value;
+
+            if (!dateInput || !timeInput) {
+                showStatus("Please select both a date and a time.", true);
+                return;
+            }
+
+            const targetDateTime = new Date(`${dateInput}T${timeInput}`);
+            const newTargetTimestamp = targetDateTime.getTime();
+            const now = new Date().getTime();
+
+            if (newTargetTimestamp <= now) {
+                showStatus("The target must be in the future!", true);
+                return;
+            }
+
+            targetTimestamp = newTargetTimestamp;
+            saveTarget(targetTimestamp);
+            startCountdown();
+        };
+
+        /**
+         * Handles the click on the "Reset" button.
+         */
+        const handleReset = async () => {
+            clearInterval(countdownInterval);
+            countdownInterval = null;
+            targetTimestamp = null;
+
+            // Reset UI
+            updateDisplay(formatTime(0));
+            const dateEl2 = document.getElementById('target-date');
+            const timeEl2 = document.getElementById('target-time');
+            if (dateEl2) dateEl2.value = '';
+            if (timeEl2) timeEl2.value = '00:00';
+            document.getElementById('countdown-title').textContent = "Set a date and time for your next big event!";
+            
+            // Delete target from Firestore (optional: setting to 0 is also fine)
+            try {
+                if (firebaseAvailable && db) {
+                    const docRef = doc(db, TIMER_DOC_PATH + userId + "/countdown_timer", TIMER_DOC_ID);
+                    await setDoc(docRef, { targetTimestamp: null, savedAt: new Date().toISOString() });
+                    showStatus("Countdown reset successfully.", false);
+                } else {
+                    // Firestore not available — just show a local status
+                    showStatus("Countdown reset locally.", false);
+                }
+            } catch (e) {
+                console.error("Error resetting document: ", e);
+                showStatus("Error resetting countdown.", true);
+            }
+        };
+
+        // --- Initialization ---
+
+        /**
+         * Main application setup function.
+         */
+        const initApp = async () => {
+            try {
+                // 1. Authentication removed: we use a local userId (no Firebase auth)
+                document.getElementById('user-id-display').textContent = userId;
+
+                // 2. Attach Event Listeners (only if elements exist)
+                const setBtn = document.getElementById('set-button');
+                const resetBtn = document.getElementById('reset-button');
+                if (setBtn) setBtn.addEventListener('click', handleSetCountdown);
+                if (resetBtn) resetBtn.addEventListener('click', handleReset);
+
+                // 3. Set min date for date input to prevent past dates (if input exists)
+                const today = new Date().toISOString().split('T')[0];
+                const dateEl = document.getElementById('target-date');
+                if (dateEl) dateEl.setAttribute('min', today);
+
+                // 4. Load previous countdown target from Firestore
+                await loadTarget();
+
+                // 5. Navbar mobile toggle (keeps behavior encapsulated in this module)
+                const navToggle = document.getElementById('nav-toggle');
+                const mobileMenu = document.getElementById('mobile-menu');
+                const openIcon = document.getElementById('nav-open-icon');
+                const closeIcon = document.getElementById('nav-close-icon');
+                if (navToggle && mobileMenu) {
+                    navToggle.addEventListener('click', () => {
+                        const isHidden = mobileMenu.classList.contains('hidden');
+                        if (isHidden) {
+                            mobileMenu.classList.remove('hidden');
+                            navToggle.setAttribute('aria-expanded', 'true');
+                            if (openIcon) openIcon.classList.add('hidden');
+                            if (closeIcon) closeIcon.classList.remove('hidden');
+                        } else {
+                            mobileMenu.classList.add('hidden');
+                            navToggle.setAttribute('aria-expanded', 'false');
+                            if (openIcon) openIcon.classList.remove('hidden');
+                            if (closeIcon) closeIcon.classList.add('hidden');
+                        }
+                    });
+                }
+                
+            } catch (error) {
+                console.error("Authentication or Initialization failed:", error);
+                document.getElementById('status-message').textContent = "Initialization failed. Check console for details.";
+            }
+        };
+
+        // Start the application setup
+        initApp();
+        
+    </script>
+</body>
+</html>
